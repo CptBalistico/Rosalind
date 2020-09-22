@@ -23,7 +23,19 @@ def convert_dna_to_rna(dna_str: str) -> str:
     return ''.join(nucleotide_list).upper()
 
 
+def write_output(rna_str: str, output_name: str):
+    """
+    Write converted RNA sequence to a text file
+
+    :param rna_str: str, RNA sequence
+    :param output_name: str, name for the output file
+    """
+
+    with open(output_name, 'w') as writer:
+        writer.write(rna_str)
+
+
 if __name__ == "__main__":
     dna_string = parse_dna_string(argv[1])
     rna_string = convert_dna_to_rna(dna_string)
-    print(rna_string)
+    write_output(rna_string, "dna_to_rna_output")
