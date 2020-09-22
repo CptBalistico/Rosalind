@@ -35,13 +35,20 @@ def count_nucleotides(dna_str: str) -> dict:
     :return: dict, contains the nucleotide: count
     """
 
-    nucleotide_dict = {}
+    nucleotide_dict = {'a': 0, 'c': 0, 'g': 0, 't': 0}
     for nucleotide in dna_str:
-        if nucleotide not in nucleotide_dict:
-            nucleotide_dict[nucleotide] = 1
-        else:
-            nucleotide_dict[nucleotide] += 1
+        nucleotide_dict[nucleotide] += 1
     return nucleotide_dict
+
+
+def report_nucleotide_count(nucleotide_count: dict):
+    """
+    Reports the count of nucleotides from a dictionary
+    :param nucleotide_count: dict, contains count of each nucleotide
+    """
+
+    print(f"{nucleotide_count['a']} {nucleotide_count['c']} "
+          f"{nucleotide_count['g']} {nucleotide_count['t']}")
 
 
 def is_valid_sequence(dna_str: str) -> bool:
@@ -62,5 +69,5 @@ def is_valid_sequence(dna_str: str) -> bool:
 
 if __name__ == "__main__":
     dna_string = parse_dna_string(argv[1])
-    nucleotide_count = count_nucleotides(dna_string)
-
+    nucl_count = count_nucleotides(dna_string)
+    report_nucleotide_count(nucl_count)
