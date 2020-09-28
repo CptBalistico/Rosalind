@@ -27,25 +27,34 @@ def create_kmers(sequence: str, kmer_size: int) -> list:
     return kmers
 
 
-def kmer_occurence(sequence: str, kmers: list) -> dict:
+def kmer_occurrence(sequence: str, kmers: list) -> dict:
     """
-    Count the occurence of each kmer in a string
+    Count the occurrence of each kmer in a string
 
     :param sequence: str, a DNA sequence
     :param kmers: list, a collection of k-mers
     :return: dict, the occurrence of each k-mer in the string
     """
 
+    kmer_count = {}
+    for kmer in kmers:
+        if kmer in kmer_count:
+            kmer_count[kmer] += 1
+        else:
+            kmer_count[kmer] = 1
+    return kmer_count
 
-def report_occurrence(kmer_occurence: dict):
+def report_occurrence(kmer_occurrence: dict):
     """
     Report the occurrence of each k-mer in lexicographical order
 
-    :param kmer_occurence: dict, the occurrence of each k-mer
+    :param kmer_occurrence: dict, the occurrence of each k-mer
     """
 
 
 if __name__ == "__main__":
-    fasta_dict = parse_fasta(argv[1])
+    sequence = argv[1]
+    fasta_dict = parse_fasta(sequence)
     fasta_string = list(fasta_dict.values())[0]
-    create_kmers(fasta_string, 4)
+    kmer_list = create_kmers(fasta_string, 4)
+    kmer_occurrence(sequence, kmer_list)
