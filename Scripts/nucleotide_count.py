@@ -60,7 +60,7 @@ def is_valid_sequence(dna_str: str) -> bool:
     """
 
     # pattern only matches to DNA nucleotides A, C, G and T
-    pattern = re.compile(r'^[*ACGT]+$', re.IGNORECASE)
+    pattern = re.compile(r'^[*ACGTacgt]+$', re.IGNORECASE)
     if re.match(pattern, dna_str):
         return True
     else:
