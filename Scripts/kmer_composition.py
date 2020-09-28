@@ -55,7 +55,7 @@ def find_combinations(integer: int) -> list:
     return permutations
 
 
-def generate_kmer_combinations(combinations: list):
+def generate_kmer_combinations(combinations: list) -> dict:
 
     bases = ['a', 't', 'c', 'g']
     kmer_collection = {}
@@ -68,12 +68,12 @@ def generate_kmer_combinations(combinations: list):
     return kmer_collection
 
 
-def kmer_occurrence(kmers: list, kmer_combinations) -> dict:
+def kmer_occurrence(kmers: list, kmer_combinations: dict) -> dict:
     """
     Count the occurrence of each kmer in a string
 
-    :param sequence: str, a DNA sequence
     :param kmers: list, a collection of k-mers
+    :param kmer_combinations: dict, all possible combinations of kmers
     :return: dict, the occurrence of each k-mer in the string
     """
 
