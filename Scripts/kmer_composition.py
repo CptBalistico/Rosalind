@@ -20,6 +20,12 @@ def create_kmers(sequence: str, kmer_size: int) -> list:
     :return: list, contains k-mers
     """
 
+    kmers = []
+    for position in range(len(sequence)):
+        if position + kmer_size <= len(sequence):
+            kmers.append(sequence[position:position + kmer_size])
+    return kmers
+
 
 def kmer_occurence(sequence: str, kmers: list) -> dict:
     """
@@ -31,13 +37,15 @@ def kmer_occurence(sequence: str, kmers: list) -> dict:
     """
 
 
-def report_occurence(kmer_occurence: dict):
+def report_occurrence(kmer_occurence: dict):
     """
     Report the occurrence of each k-mer in lexicographical order
 
-    :param kmer_occurence:
+    :param kmer_occurence: dict, the occurrence of each k-mer
     """
 
 
 if __name__ == "__main__":
     fasta_dict = parse_fasta(argv[1])
+    fasta_string = list(fasta_dict.values())[0]
+    create_kmers(fasta_string, 4)
