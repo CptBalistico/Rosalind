@@ -37,6 +37,8 @@ def find_combinations(integer: int) -> list:
     """
 
     length = 1
+
+    # create a separate list for each unique element
     permutations = [[number] for number in range(1, integer + 1)]
     while length < integer:
         temp_list = []
