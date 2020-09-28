@@ -27,7 +27,48 @@ def create_kmers(sequence: str, kmer_size: int) -> list:
     return kmers
 
 
-def kmer_occurrence(sequence: str, kmers: list) -> dict:
+def find_combinations(integer: int) -> list:
+    """
+    Find all permutations of length x (integer)
+
+    Based on a given integer, identify all possible combinations that can be
+    made based on the numbers between 1 and the integer. Calling the function
+    with 3 as integer, this results in a total of six different combinations:
+    3 * 2 * 1 = 6. Each combination of numbers is reported as list of lists
+
+    :param integer: int, maximum length of each combination
+    :return: list, all permutations that are possible
+    """
+
+    length = 1
+
+    # create a separate list for each unique element
+    permutations = [[number] for number in range(1, integer + 1)]
+    while length < integer:
+        temp_list = []
+        for perm in permutations:
+            for i in range(1, integer + 1):
+                temp_list.append(perm + [i])
+        permutations = temp_list
+        length += 1
+
+    return permutations
+
+
+def generate_kmer_combinations(combinations: list):
+
+    bases = ['a', 't', 'c', 'g']
+    kmer_collection = {}
+    for combination in combinations:
+        temp_sequence = []
+        for integer in combination:
+            temp_sequence.append(bases[integer - 1])
+        kmer_collection[''.join(temp_sequence)] = 0
+
+    return kmer_collection
+
+
+def kmer_occurrence(kmers: list, kmer_combinations) -> dict:
     """
     Count the occurrence of each kmer in a string
 
@@ -36,13 +77,11 @@ def kmer_occurrence(sequence: str, kmers: list) -> dict:
     :return: dict, the occurrence of each k-mer in the string
     """
 
-    kmer_count = {}
     for kmer in kmers:
-        if kmer in kmer_count:
-            kmer_count[kmer] += 1
-        else:
-            kmer_count[kmer] = 1
-    return kmer_count
+        if kmer in kmer_combinations:
+            kmer_combinations[kmer] += 1
+    return kmer_combinations
+
 
 def report_occurrence(kmer_occurrence: dict):
     """
@@ -51,10 +90,16 @@ def report_occurrence(kmer_occurrence: dict):
     :param kmer_occurrence: dict, the occurrence of each k-mer
     """
 
+    sorted_kmers = {kmer: count for kmer, count in sorted(kmer_occurrence.items(), key=lambda item: item[0])}
+    with open("answer_file.txt", 'w') as writer:
+        writer.write(' '.join(str(count) for count in list(sorted_kmers.values())))
+
 
 if __name__ == "__main__":
-    sequence = argv[1]
-    fasta_dict = parse_fasta(sequence)
+    dna_seq = argv[1]
+    fasta_dict = parse_fasta(dna_seq)
     fasta_string = list(fasta_dict.values())[0]
     kmer_list = create_kmers(fasta_string, 4)
-    kmer_occurrence(sequence, kmer_list)
+    integer_combinations = find_combinations(4)
+    kmer_counts = kmer_occurrence(kmer_list, generate_kmer_combinations(integer_combinations))
+    report_occurrence(kmer_counts)
