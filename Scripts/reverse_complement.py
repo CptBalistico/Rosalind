@@ -7,7 +7,7 @@ Date: 22/09/2020
 
 # imports
 from dna_to_rna import write_output
-from nucleotide_count import parse_dna_string
+from nucleotide_count import parse_string
 from sys import argv
 
 
@@ -33,7 +33,7 @@ def get_reverse_complement(dna_str: str) -> str:
 
 
 if __name__ == "__main__":
-    dna_string = parse_dna_string(argv[1])
+    dna_string = parse_string(argv[1])
     complement = get_reverse_complement(dna_string)
     write_output(complement, "complementary_dna.txt")
 

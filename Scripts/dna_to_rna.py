@@ -6,7 +6,7 @@ Date: 22/09/2020
 """
 
 # imports
-from nucleotide_count import parse_dna_string
+from nucleotide_count import parse_string
 from sys import argv
 
 
@@ -36,6 +36,6 @@ def write_output(rna_str: str, output_name: str):
 
 
 if __name__ == "__main__":
-    dna_string = parse_dna_string(argv[1])
+    dna_string = parse_string(argv[1])
     rna_string = convert_dna_to_rna(dna_string)
     write_output(rna_string, "dna_to_rna_output")

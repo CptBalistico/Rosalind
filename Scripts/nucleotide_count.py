@@ -11,7 +11,7 @@ from sys import argv
 
 
 # functions
-def parse_dna_string(text_file: str) -> str:
+def parse_string(text_file: str) -> str:
     """
     Parse a DNA string from a text file
 
@@ -23,8 +23,6 @@ def parse_dna_string(text_file: str) -> str:
         for dna_str in dna_strings:
             if is_valid_sequence(dna_str.strip()):
                 return dna_str.strip().lower()
-            else:
-                raise ValueError("Invalid char in sequence")
 
 
 def count_nucleotides(dna_str: str) -> dict:
@@ -60,7 +58,7 @@ def is_valid_sequence(dna_str: str) -> bool:
     """
 
     # pattern only matches to DNA nucleotides A, C, G and T
-    pattern = re.compile(r'^[*ACGTacgt]+$', re.IGNORECASE)
+    pattern = re.compile(r'^[*ACGTUacgtu]+$', re.IGNORECASE)
     if re.match(pattern, dna_str):
         return True
     else:
@@ -68,6 +66,6 @@ def is_valid_sequence(dna_str: str) -> bool:
 
 
 if __name__ == "__main__":
-    dna_string = parse_dna_string(argv[1])
+    dna_string = parse_string(argv[1])
     nucl_count = count_nucleotides(dna_string)
     report_nucleotide_count(nucl_count)
