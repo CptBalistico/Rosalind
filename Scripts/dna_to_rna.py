@@ -6,6 +6,7 @@ Date: 22/09/2020
 """
 
 # imports
+from nucleotide_count import is_valid_sequence
 from nucleotide_count import parse_string
 from sys import argv
 
@@ -18,8 +19,11 @@ def convert_dna_to_rna(dna_str: str) -> str:
     :return: str, sequence of a corresponding RNA segment
     """
 
-    nucleotide_list = ['u' if nucleotide == 't' else nucleotide
-                       for nucleotide in dna_str]
+    if not is_valid_sequence(dna_str):
+        raise ValueError("Unknown characters in DNA string")
+
+    nucleotide_list = ['u' if nucleotide.lower() == 't' else
+                       nucleotide.lower() for nucleotide in dna_str]
     return ''.join(nucleotide_list).upper()
 
 
