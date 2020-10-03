@@ -30,7 +30,7 @@ def parse_numbers(text_file: str) -> list:
             if line.strip() == '':
                 continue
             else:
-                return line.split(' ')
+                return [int(number) for number in line.split(' ')]
 
 
 def dominant_probability(individuals: list) -> float:
@@ -46,7 +46,32 @@ def dominant_probability(individuals: list) -> float:
     :return: float, probability of an organism having a dominant allele
     """
 
+    total = sum(individuals)
+    h_dom, het, h_rec = individuals[0], individuals[1], individuals[2]
+    probabilities = []
+
+    # AA * AA
+    probabilities.append(h_dom / total * (h_dom - 1) / (total - 1))
+    # AA * Aa
+    probabilities.append(h_dom / total * (het / (total - 1)))
+    # AA * aa
+    probabilities.append(h_dom / total * (h_rec / (total - 1)))
+
+    # Aa * AA
+    probabilities.append(het / total * (h_dom / (total - 1)))
+    # Aa * Aa
+    probabilities.append((het / total * (het - 1) / (total - 1)) * 0.75)
+    # Aa * aa
+    probabilities.append(het / total * (h_rec / (total - 1)) * 0.50)
+
+    # aa * AA
+    probabilities.append(h_rec / total * (h_dom / (total - 1)))
+    # aa * Aa
+    probabilities.append(h_rec / total * (het / (total - 1)) * 0.5)
+
+    return sum(probabilities)
+
 
 if __name__ == "__main__":
     numbers = parse_numbers(argv[1])
-    print(numbers)
+    print(dominant_probability(numbers))
